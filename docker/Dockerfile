@@ -13,6 +13,6 @@ COPY conf/nginx.conf  /usr/local/openresty/nginx/conf/nginx.conf
 ADD conf /etc/nginx/conf.d/
 
 ###添加资源文件
-ADD resources/ /home/xgc/xgtrace-portal
+ADD resources/ /home/xgc/yichenelaine/5120webpackage
 
 RUN chmod -R 755 /home

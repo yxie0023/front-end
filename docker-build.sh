@@ -5,16 +5,15 @@ npm run build
 
 docker rm `docker ps -a -q`
 
-docker rmi --force `docker images | grep xgtrace-portal | awk '{print $3}'`
+docker rmi --force `docker images | grep yichenelaine/5120webpackage | awk '{print $3}'`
 docker rmi --force `docker images | grep none | awk '{print $3}'`
 
-docker build -t xgtrace-portal:$version ./docker
+docker build -t yichenelaine/5120webpackage:$version ./docker
 
 
+docker tag yichenelaine/5120webpackage:$version yichenelaine/5120webpackage:$version
 
-docker tag xgtrace-portal:$version 10.10.208.193:5000/xgtrace-portal:$version
+docker push yichenelaine/5120webpackage:$version
 
-docker push 10.10.208.193:5000/xgtrace-portal:$version
-
-echo "build admin sucess 10.10.208.193:5000/xgtrace-portal:$version"
+echo "build admin sucess yichenelaine/5120webpackage:$version"
 
