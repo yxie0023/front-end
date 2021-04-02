@@ -2,7 +2,7 @@
     <div id="app">
         <Layout>
             <Header id="header">
-                <img src="./assets/imgs/logo.png" alt="" id="logo" />
+                <img src="./assets/imgs/logo.png" alt="" id="logo" @click="gohome" style="cursor: pointer"/>
                 Super Protector</Header
             >
             <div class="nav">
@@ -76,6 +76,11 @@ export default {
         },
     },
     methods: {
+      gohome(){
+        this.$router.push({
+          path: '/index',
+        })
+      },
         menuChange(data) {
             // console.log(data)
             switch (data) {
@@ -128,6 +133,7 @@ body {
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: #2c3e50;
+  overflow: hidden;
     // height: 100%;
     // width: 100%;
     // overflow: hidden;
