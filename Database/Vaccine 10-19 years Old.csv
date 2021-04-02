@@ -1,0 +1,25 @@
+Vaccine,Clinicallyrecommended(Funded),LinkedTofamilypayments,DosesRequired,MinIntervalBetweenDose1and2,MinIntervalBetweenDose2and3
+dT *,Yes,Yes,3 doses,4 weeks,4 weeks
+Pertussis,Yes,Yes,1 dose,Not required,Not required
+"Poliomyelitis
+(IPV)",Yes,Yes,3 doses,4 weeks,4 weeks
+MMR,Yes,Yes,2 doses,4 weeks,Not required
+"Hepatitis B
+Aged 10–19
+years ^",Yes,Yes,"3 paediatric
+doses",1 month,2 months^{†}
+"Hepatitis B Aged
+11–15 years
+only ^",Yes,Yes,2 adult doses,4 months,Not required
+MenCCV,Yes,No,1 dose,,Not required
+§¶ Varicella,Yes,No,"At least 1 dose
+if aged <14
+years","If 2nd dose
+given, a 4-week
+interval is
+required^{§}",Not required
+§¶ Varicella,Yes,No,"2 doses if aged
+?14 years",4 weeks,Not required
+Pneumoccocal,No,No,,,
+Hib,No,No,,,
+Rotavirus,No,No,,,
