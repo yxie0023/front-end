@@ -1,0 +1,29 @@
+Antigen,Total doses needed,Minimal interval between doses,Notes
+"Diphtheria, tetanus",3 doses,"Between doses 1 and 2:
+4 weeks
+Between doses 2 and 3:
+4 weeks","People should receive 1 of the doses as
+dTpa-containing vaccine to provide the
+catch-up dose for pertussis. The course
+can be completed with dT.
+If dT is not available, use dTpa or
+dTpa-IPV for all 3 primary doses."
+Pertussis,1 dose,Not required,"People ?10 years of age who did not
+receive all the pertussis vaccine doses
+recommended before the age of 10
+years only need 1 dose to be considered
+up to date. This is regardless of the
+number of previous doses they received
+before the age of 10 years."
+Poliomyelitis,3 doses,"Between doses 1 and 2:
+4 weeks
+Between doses 2 and 3:
+4 weeks",None
+"mumps, Measles, rubella",2 doses,4 weeks,None
+Hepatitis B ,3 adult doses,"Between doses 1 and 2:
+1 month
+Between doses 2 and 3:
+2 months","Minimum interval between dose 1 and
+dose 3 is 4 months."
+Varicella,2 doses,4 weeks,"MMRV is not recommended for use in
+people ?14 years of age."
