@@ -92,14 +92,14 @@ export default {
                                         'It totally contains 3 doses, after the first one taken, the second one should be taken after 4 weeks, and then the last dose should be taken after 4 weeks more.',
                                     effects: [
                                         {
-                                            name: 'side-effect1',
+                                            name: 'side-effect1: Tiredness',
                                             description:
-                                                'the description of side effect one',
+                                                'It can cause fatigue and weakness after you get the vaccine.',
                                         },
                                         {
-                                            name: 'side-effect2',
+                                            name: 'side-effect2: Pain and swelling in the arm',
                                             description:
-                                                'the description of side effect two',
+                                                'There may be varying degrees of pain and swelling at the site of your injection.',
                                         },
                                     ],
                                 }
@@ -114,14 +114,14 @@ export default {
                                         'sflkajlfkalvj avnwqe kalvj avnwqe cvwrvqejvulsflkcjc eqjrivn wdcwjiv',
                                     effects: [
                                         {
-                                            name: 'effect1',
+                                            name: 'effect1: Redness',
                                             description:
-                                                'the description of side effect one',
+                                                'It may cause varying degrees of redness at the inoculation site after you have been vaccinated.',
                                         },
                                         {
-                                            name: 'side-effect2',
+                                            name: 'side-effect2: Nausea',
                                             description:
-                                                'the description of side effect two',
+                                                'It may cause a certain degree of nausea after you get vaccinated.o',
                                         },
                                     ],
                                 }
@@ -135,14 +135,14 @@ export default {
                                         'It totally contains 3 doses, after the first one taken, the second one should be taken after 4 weeks, and then the last dose should be taken after 4 weeks more.',
                                     effects: [
                                         {
-                                            name: 'side-effect1',
+                                            name: 'side-effect1: Anaphylaxis',
                                             description:
-                                                'the description of side effect one',
+                                                'If you are allergic to one of the ingredients in the vaccine, you may experience systemic adverse effects, like welts, hives, lip and throat or blood pressure changes after getting the vaccine.',
                                         },
                                         {
-                                            name: 'side-effect2',
+                                            name: 'side-effect2: Headache',
                                             description:
-                                                'the description of side effect two',
+                                                'It may cause varying degrees of headache or dizziness after you get the vaccine.',
                                         },
                                     ],
                                 }
@@ -156,14 +156,14 @@ export default {
                                         'It totally contains 3 doses, after the first one taken, the second one should be taken after 4 weeks, and then the last dose should be taken after 4 weeks more.',
                                     effects: [
                                         {
-                                            name: 'side-effect1',
+                                            name: 'side-effect1: Pain and swelling in the arm',
                                             description:
-                                                'the description of side effect one',
+                                                'There may be varying degrees of pain and swelling at the site of your injection.',
                                         },
                                         {
-                                            name: 'side-effect2',
+                                            name: 'side-effect2: Redness',
                                             description:
-                                                'the description of side effect two',
+                                                'It may cause varying degrees of redness at the inoculation site after you have been vaccinated.',
                                         },
                                     ],
                                 }
