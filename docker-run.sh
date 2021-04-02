@@ -5,3 +5,8 @@ docker run -d  --privileged=true -p 9005:9005 --name 5120webpackage yichenelaine
 
 
 docker logs -f 5120webpackage
+
+
+
+docker update project5120 --restart=always
+docker update vaccine --restart=always
