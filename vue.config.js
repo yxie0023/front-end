@@ -15,7 +15,7 @@ module.exports = {
         proxy: {
             '/*': {
                 //target: 'http://localhost:8880/', //本地
-                target: 'http://3.134.83.160:8880/',//外网
+                target: 'http://47.100.78.119:8880/',//外网
                 ws: false,
                 changeOrigin: true
             }
