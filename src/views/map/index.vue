@@ -16,28 +16,6 @@
         </div>
       </Col>
     </Row>
-    <!-- <div class="content">
-        <div class="data">
-            <p class="title">Top 1:xxx</p>
-            <p class="desc">
-               yingwen
-            </p>
-        </div>
-        <div class="data">
-            <img :src="data22" alt="" />
-            <p>introduce the data meaning</p>
-        </div>
-        <div class="data">
-            <ul class="effect">
-                <li>side effect</li>
-                <li>side effect</li>
-                <li>side effect</li>
-                <li>side effect</li>
-                <li>side effect</li>
-                <li>side effect</li>
-            </ul>
-        </div>
-    </div> -->
   </div>
 </template>
 
