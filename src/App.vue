@@ -3,7 +3,7 @@
         <Layout>
             <Header id="header">
                 <img src="./assets/imgs/logo.png" alt="" id="logo" @click="gohome" style="cursor: pointer"/>
-                Super Protector</Header
+                SuperProtector</Header
             >
             <div class="nav">
                 <Menu
@@ -21,20 +21,16 @@
                     </MenuItem>
                     <MenuItem name="3">
                         <Icon type="ios-people" />
-                        Vaccine Compare
+                        Data Comparison
                     </MenuItem>
                     <MenuItem name="4">
                         <Icon type="ios-aperture" />
-                        Side effects
+                        News
                     </MenuItem>
                     <MenuItem name="5">
                         <Icon type="ios-stats" />
                         About us
                     </MenuItem>
-                    <!-- <MenuItem name="6">
-              <Icon type="ios-construct" />
-              Language
-            </MenuItem> -->
                 </Menu>
             </div>
             <div class="contents">
@@ -149,7 +145,7 @@ body {
 // }
 #header {
     color: #fff;
-    font-size: 26px;
+    font-size: 35px;
     background-color: #009aff;
     position: relative;
     #logo {
@@ -158,9 +154,10 @@ body {
         left: 10px;
     }
 }
-.nav {
+#nav {
     width: 100%;
     text-align: center;
+    font-size: 20px;
 }
 </style>
 

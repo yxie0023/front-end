@@ -8,12 +8,12 @@
 <!--            style="width: 300px"-->
 <!--            class="searchBtn"-->
 <!--        />-->
-        <span>Are you an adult or a child?</span>
+        <span>Are you an adult over 20 or a child/teenager?</span>
         <span>
                     <RadioGroup @on-change="radio_change" v-model="radios">
-                        <Radio label="child"></Radio>
+                        <Radio label="child/teenager"></Radio>
                         <Radio label="adult"></Radio>
-                        <Radio label="all"></Radio>
+                        <!--<Radio label="all"></Radio>-->
                     </RadioGroup>
                 </span>
       </p>
@@ -156,14 +156,14 @@ export default {
             this.vaccineList.push(v)
           }
         })
-      }else if(data == 'child') {
+      }else
+          // if(data == 'child')
+          {
         this.totalData.forEach(v=>{
           if(v.vaccineAgeType==0){
             this.vaccineList.push(v)
           }
         })
-      }else{
-        this.vaccineList = this.totalData
       }
       // console.log(this.vaccineList,111);
     },

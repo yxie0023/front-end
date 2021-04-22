@@ -1,108 +1,90 @@
 <template>
-    <div>
-        <h1>Top 8 side effects</h1>
-        <Table
-            :row-class-name="rowClassName"
-            :columns="columns1"
-            :data="data1"
-            border
-        ></Table>
-        <!-- <p>Custom column styles:</p>
-    <Table :columns="columns9" :data="data1"></Table>
-    <p>Custom arbitrary cell styles:</p>
-    <Table :columns="columns1" :data="data8"></Table> -->
+    <div style="width: 100vw; height: 100vh">
+        <div class="list">
+            <div class="item" v-for="(item, index) in list" :key="index">
+                <img :src="item.img" alt="" />
+                <div style="padding:0 2vw;height:20vh;font-weight:bold;font-size:150%">{{item.title}}</div>
+                <el-button type="primary" style="margin-left:2vw;" @click="url(item.url)">Read Article</el-button>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
-export default {
-    data() {
-        return {
-            columns1: [
-                {
-                    title: 'Side-effect Name',
-                    key: 'name',
-                  align:'center',
-                  width:'300px'
-                },
-                {
-                    title: 'Side-effect Description',
-                    key: 'desc',
-                    align:'center'
-                },
-            ],
-            data1: [
-                {
-                    name: 'Pain and swelling in the arm',
-                    desc:
-                        'There may be varying degrees of pain and swelling at the site of your injection.',
-                },
-                {
-                    name: 'Fever',
-                    desc:
-                        'It may cause a mild fever after you get the vaccine.',
-                },
-                {
-                    name: 'Tiredness',
-                    desc:
-                        'It can cause fatigue and weakness after you get the vaccine.',
-                },
-                {
-                    name: 'Headache',
-                    desc:
-                        'It may cause varying degrees of headache or dizziness after you get the vaccine.',
-                },
-                {
-                    name: 'Anaphylaxis',
-                    desc:
-                        'If you are allergic to one of the ingredients in the vaccine, you may experience systemic adverse effects, like welts, hives, lip and throat or blood pressure changes after getting the vaccine.',
-                },
-                {
-                    name: 'Chills',
-                    desc:
-                        'It can cause chills of varying degrees after you have been vaccinated.',
-                },
-                {
-                    name: 'Redness',
-                    desc:
-                        'It may cause varying degrees of redness at the inoculation site after you have been vaccinated.s',
-                },
-                {
-                    name: 'Nausea',
-                    desc:
-                        'It may cause a certain degree of nausea after you get vaccinated.',
-                },
-            ],
-        }
-    },
-    methods: {
-        rowClassName(row, index) {
-            if (index === 1 || index === 3 || index === 5 || index === 7) {
-                return 'demo-table-info-row'
-            } else {
-                return 'demo-table-white'
-            }
-            return ''
+    export default {
+        name: "page",
+        data() {
+            return {
+                activeIndex: "6",
+                list: [],
+            };
         },
-    },
-}
-</script>
+        mounted() {
+            fetch("http://47.100.78.119:8880/news/getNews", {
+                method: "GET",
+            })
+                .then((res) => {
+                    return res.json(); //请求成功，获请求元数据
+                })
+                .then((result) => {
+                    console.log(result);
+                    result[0].img = require("@/assets/imgs/DTP.jpg");
+                    result[1].img = require("@/assets/imgs/Poliomyelitis.jpg");
+                    result[2].img = require("@/assets/imgs/MMR.jpg");
+                    result[3].img = require("@/assets/imgs/MMR.jpg");
+                    result[4].img = require("@/assets/imgs/Varicella.jpg");
+                    result[5].img = require("@/assets/imgs/Pneumoccocal.jpg");
+                    result[6].img = require("@/assets/imgs/Rotavirus.jpg");
 
-<style>
-.ivu-table .demo-table-info-row td {
-    background-color: #e6f5fc;
-    color: #666;
-    text-align: center;
-}
-.ivu-table .demo-table-white td {
-    background-color: #fff;
-    color: #060606;
-        text-align: center;
-}
-.ivu-table .demo-table-error-row td {
-    background-color: #ff6600;
-    color: #fff;
-        text-align: center;
-}
+                    this.list = result;
+                });
+        },
+
+        methods: {
+            handleSelect(key, keyPath) {
+                console.log(key, keyPath);
+            },
+            url(e){
+                window.open(e)
+            }
+        },
+    };
+</script>
+<style  scoped>
+    .header {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        height: 10vh;
+        display: flex;
+        flex-direction: row;
+    }
+    .header img {
+        width: 12vw;
+        height: 10vh;
+    }
+    .el-menu-demo {
+        width: 73vw;
+        padding-left: 15vw;
+        line-height: 10vh;
+    }
+    .list {
+        max-width: 90vw;
+        padding: 20vh 5vw 0 5vw;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        margin-bottom:20vh;
+    }
+    .item {
+        width: 25vw;
+        height: 60vh;
+        margin-bottom: 5vh;
+        background-color: #f2f2f2;
+    }
+    .item img{
+        width: 25vw;
+        height: 30vh;
+    }
 </style>
-   
