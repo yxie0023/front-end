@@ -1,9 +1,11 @@
 <template>
-    <div style="width: 100vw; height: 100vh">
+    <div style="width: 100%; height: 50%">
+        <h3>We provide relevant news based on the vaccines on our website, which are grouped by vaccine type so that users can easily browse the categories in need. These vaccine-related news help users keep abreast of the latest vaccine developments around the world, which helps people better understand vaccines and motivate people to get vaccinated.</h3>
         <div class="list">
             <div class="item" v-for="(item, index) in list" :key="index">
                 <img :src="item.img" alt="" />
-                <div style="padding:0 2vw;height:20vh;font-weight:bold;font-size:150%">{{item.title}}</div>
+                <div style="font-size:150%">{{item.vaccineName}}</div>
+                <div style="padding:0 2vw;height:18vh;font-weight:bold;font-size:150%">{{item.title}}</div>
                 <el-button type="primary" style="margin-left:2vw;" @click="url(item.url)">Read Article</el-button>
             </div>
         </div>
@@ -51,22 +53,9 @@
     };
 </script>
 <style  scoped>
-    .header {
-        position: fixed;
-        top: 0;
-        width: 100%;
-        height: 10vh;
-        display: flex;
-        flex-direction: row;
-    }
     .header img {
         width: 12vw;
         height: 10vh;
-    }
-    .el-menu-demo {
-        width: 73vw;
-        padding-left: 15vw;
-        line-height: 10vh;
     }
     .list {
         max-width: 90vw;
