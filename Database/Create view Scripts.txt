@@ -349,3 +349,26 @@ VIEW `vw_VaccineOver20` AS
     FROM
         `vaccines-for-refugees-aged-20-years`
 ------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`%` 
+    SQL SECURITY DEFINER
+VIEW `vw_CombinedVaccineDescEffects` AS
+	/*combine the vaccine lists with the side effects table into one one list*/
+    SELECT DISTINCT
+        `p`.`VaccineName` AS `VaccineName`,
+        `p`.`Disease` AS `Description`,
+        `p`.`SideEffectsOfVaccination` AS `SideEffect`,
+	/*add new column VaccineAgeType flag, 1 for adult and 0 for child/teens*/
+        1 AS `VaccineAgeType`
+    FROM
+        (`vw_Side-effects-disease-Vaccine` `p`
+        JOIN `vw_VaccineOver20` `t` ON ((`p`.`VaccineCode` = `t`.`VaccineCode`))) 
+    UNION ALL SELECT DISTINCT
+        `p`.`VaccineName` AS `VaccineName`,
+        `p`.`Disease` AS `Description`,
+        `p`.`SideEffectsOfVaccination` AS `SideEffect`,
+        0 AS `VaccineAgeType`
+    FROM
+        (`vw_Side-effects-disease-Vaccine` `p`
+        JOIN `vw_Vaccine10To19` `t` ON ((`p`.`VaccineCode` = `t`.`VaccineCode`)))
