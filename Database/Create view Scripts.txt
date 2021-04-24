@@ -1,0 +1,374 @@
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`%` 
+    SQL SECURITY DEFINER
+VIEW `vw_Vaccine10To19` AS
+    SELECT 
+        `Vaccine 10-19 years Old`.`Vaccine` AS `Vaccine`,
+        `Vaccine 10-19 years Old`.`Clinicallyrecommended(Funded)` AS `Clinicallyrecommended(Funded)`,
+        `Vaccine 10-19 years Old`.`LinkedTofamilypayments` AS `LinkedTofamilypayments`,
+        `Vaccine 10-19 years Old`.`DosesRequired` AS `DosesRequired`,
+        `Vaccine 10-19 years Old`.`MinIntervalBetweenDose1and2` AS `MinIntervalBetweenDose1and2`,
+        `Vaccine 10-19 years Old`.`MinIntervalBetweenDose2and3` AS `MinIntervalBetweenDose2and3`,
+	/*create new column VaccineName based on the column Vaccine*/
+        (CASE
+            WHEN (`Vaccine 10-19 years Old`.`Vaccine` IN ('dT *' , 'Pertussis')) THEN 'Diphtheria, Pertussis, Tetanus'
+            WHEN (`Vaccine 10-19 years Old`.`Vaccine` = 'MMR') THEN 'Mumps, Measles, Rubella'
+            WHEN (`Vaccine 10-19 years Old`.`Vaccine` LIKE 'Poliomyelitis%') THEN 'Poliomyelitis'
+            WHEN (`Vaccine 10-19 years Old`.`Vaccine` LIKE 'Hepatitis B%') THEN 'Hepatitis B'
+            WHEN (`Vaccine 10-19 years Old`.`Vaccine` = 'MenCCV') THEN 'Mningococcal'
+            WHEN (`Vaccine 10-19 years Old`.`Vaccine` LIKE '%Varicella%') THEN 'Varicella'
+            WHEN (`Vaccine 10-19 years Old`.`Vaccine` LIKE '%Pneumoccocal%') THEN 'Pneumoccocal'
+            WHEN (`Vaccine 10-19 years Old`.`Vaccine` = 'Hib') THEN 'Haemophilus influenzae type b'
+            WHEN (`Vaccine 10-19 years Old`.`Vaccine` = 'Rotavirus') THEN 'Rotavirus'
+        END) AS `VaccineName`,
+	/*create new column VaccineCode based on the column Vaccine*/
+        (CASE
+            WHEN (`Vaccine 10-19 years Old`.`Vaccine` IN ('dT *' , 'Pertussis')) THEN 'DTP3'
+            WHEN (`Vaccine 10-19 years Old`.`Vaccine` = 'MMR') THEN 'MMR'
+            WHEN (`Vaccine 10-19 years Old`.`Vaccine` LIKE 'Poliomyelitis%') THEN 'IPV1'
+            WHEN (`Vaccine 10-19 years Old`.`Vaccine` LIKE 'Hepatitis B%') THEN 'HepB3'
+            WHEN (`Vaccine 10-19 years Old`.`Vaccine` = 'MenCCV') THEN 'MenCCV'
+            WHEN (`Vaccine 10-19 years Old`.`Vaccine` LIKE '%Varicella%') THEN 'Varicella'
+            WHEN (`Vaccine 10-19 years Old`.`Vaccine` LIKE '%Pneumoccocal%') THEN 'PCV'
+            WHEN (`Vaccine 10-19 years Old`.`Vaccine` = 'Hib') THEN 'Hib'
+            WHEN (`Vaccine 10-19 years Old`.`Vaccine` = 'Rotavirus') THEN 'RotaC'
+        END) AS `VaccineCode`
+    FROM
+        `Vaccine 10-19 years Old`
+
+
+-------------------------------------------------
+
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`%` 
+    SQL SECURITY DEFINER
+VIEW `vw_TotalDeathByCause` AS
+    SELECT 
+	/*Rename the column Entity to CountryName*/
+        `total-number-of-deaths-by-cause`.`Entity` AS `CountryName`,
+        `total-number-of-deaths-by-cause`.`Code` AS `Code`,
+	/*convert the column Year to integer*/
+        CAST(`total-number-of-deaths-by-cause`.`Year` AS UNSIGNED) AS `Year`,
+	/*convert the column `Deaths - Communicable-maternal-neonatal-nutritional diseases to integer and rename to `TotalDeaths_Communicable`*/
+        CAST(`total-number-of-deaths-by-cause`.`Deaths - Communicable-maternal-neonatal-nutritional diseases`
+            AS DECIMAL (10 , 0 )) AS `TotalDeaths_Communicable`
+    FROM
+        `total-number-of-deaths-by-cause`
+    WHERE
+	/* exclude blank values of column Code and where values of Entity is not World*/
+        ((`total-number-of-deaths-by-cause`.`Code` <> '')
+            AND (`total-number-of-deaths-by-cause`.`Entity` <> 'World'))
+---------------------------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`%` 
+    SQL SECURITY DEFINER
+VIEW `vw_Top10CountriesHealthTrust` AS
+    SELECT 
+        `vw_HealthcareTrust`.`CountryName` AS `CountryName`,
+        `vw_HealthcareTrust`.`DoctorsANursesTrustRate` AS `DoctorsANursesTrustRate`
+    FROM
+        `vw_HealthcareTrust`
+    ORDER BY `vw_HealthcareTrust`.`DoctorsANursesTrustRate` DESC
+	/*Select the top highest rate countries*/
+    LIMIT 10
+------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`%` 
+    SQL SECURITY DEFINER
+VIEW `vw_Side-effects-disease-Vaccine` AS
+    SELECT 
+	/*rename the columns*/
+        `Side-effects-disease-Vaccine`.`Vaccine Name` AS `VaccineName`,
+        `Side-effects-disease-Vaccine`.`Disease` AS `Disease`,
+        `Side-effects-disease-Vaccine`.`Effects of Disease` AS `EffectsofDisease`,
+        `Side-effects-disease-Vaccine`.`Side Effects of Vaccination` AS `SideEffectsOfVaccination`,
+	/*Create new column Vaccine code based on the vaccine name*/
+        (CASE
+            WHEN (`Side-effects-disease-Vaccine`.`Vaccine Name` = 'Diphtheria') THEN 'DTP3'
+            WHEN (`Side-effects-disease-Vaccine`.`Vaccine Name` = 'Pertussis') THEN 'DTP3'
+            WHEN (`Side-effects-disease-Vaccine`.`Vaccine Name` = 'Tetanus') THEN 'DTP3'
+            WHEN (`Side-effects-disease-Vaccine`.`Vaccine Name` = 'Poliomyelitis') THEN 'IPV1'
+            WHEN (`Side-effects-disease-Vaccine`.`Vaccine Name` = 'mumps, Measles, rubella') THEN 'MMR'
+            WHEN (`Side-effects-disease-Vaccine`.`Vaccine Name` = 'Hepatitis A') THEN 'HepA'
+            WHEN (`Side-effects-disease-Vaccine`.`Vaccine Name` = 'Hepatitis B') THEN 'HepB3'
+            WHEN (`Side-effects-disease-Vaccine`.`Vaccine Name` = 'Mumps') THEN 'MMR'
+            WHEN (`Side-effects-disease-Vaccine`.`Vaccine Name` = 'HIB') THEN 'Hib'
+            WHEN (`Side-effects-disease-Vaccine`.`Vaccine Name` = 'HPV') THEN 'HPV'
+            WHEN (`Side-effects-disease-Vaccine`.`Vaccine Name` = 'Measles') THEN 'MMR'
+            WHEN (`Side-effects-disease-Vaccine`.`Vaccine Name` = 'Rubella') THEN 'MMR'
+            WHEN (`Side-effects-disease-Vaccine`.`Vaccine Name` = 'Influenza') THEN 'Influenza'
+            WHEN (`Side-effects-disease-Vaccine`.`Vaccine Name` = 'Meningococcal') THEN 'MenCCV'
+            WHEN (`Side-effects-disease-Vaccine`.`Vaccine Name` = 'Varicella') THEN 'Varicella'
+        END) AS `VaccineCode`
+    FROM
+        `Side-effects-disease-Vaccine`
+----------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`%` 
+    SQL SECURITY DEFINER
+VIEW `vw_HealthcareTrust` AS
+    SELECT 
+	/*Rename column Code to CountryCode*/
+        `trust-healthcare-vs-vaccine-safety`.`Code` AS `CountryCode`,
+	/*Rename column Entity to CountryName*/
+        `trust-healthcare-vs-vaccine-safety`.`Entity` AS `CountryName`,
+	/*Convert Year to integer*/
+        CAST(`trust-healthcare-vs-vaccine-safety`.`Year`
+            AS UNSIGNED) AS `Year`,
+	/*Rename column `trust doctors and nurses' to CountryCode and rename it to `DoctorsANursesTrustRate`*/
+        CAST(`trust-healthcare-vs-vaccine-safety`.`trust doctors and nurses`
+            AS DECIMAL (10 , 0 )) AS `DoctorsANursesTrustRate`,
+	/*Rename column `disagree vaccines are safe` to CountryCode and rename it to `DisagreeVaccineSafeRate`*/
+        CAST(`trust-healthcare-vs-vaccine-safety`.`disagree vaccines are safe`
+	/*create new column `AgreeVaccineSafeRate` that calculate the agreement rate based on the disagreement rate*/
+            AS DECIMAL (10 , 0 )) AS `DisagreeVaccineSafeRate`,
+        CAST((100 - `trust-healthcare-vs-vaccine-safety`.`disagree vaccines are safe`)
+            AS DECIMAL (10 , 0 )) AS `AgreeVaccineSafeRate`
+    FROM
+        `trust-healthcare-vs-vaccine-safety`
+    WHERE
+	/*Exclude blank values of column Continent, code is not blank and Entity is not blank*/
+        ((`trust-healthcare-vs-vaccine-safety`.`Continent` = '')
+            AND (`trust-healthcare-vs-vaccine-safety`.`Code` <> '')
+            AND (`trust-healthcare-vs-vaccine-safety`.`Entity` <> 'World'))
+----------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`%` 
+    SQL SECURITY DEFINER
+VIEW `vw_GlobalVaccinationCoverage` AS
+    SELECT 
+        `p`.`CountryName` AS `CountryName`,
+        `p`.`CountryCode` AS `CountryCode`,
+        `p`.`Year` AS `Year`,
+        `p`.`VaccineRate` AS `VaccineRate`,
+        `p`.`VaccineCode` AS `VaccineCode`,
+        `p`.`VaccineName` AS `VaccineName`
+    FROM
+	/* unpivot the table to have the columns of each vaccine in the rows*/
+        (SELECT 
+	/*rename Entity column to CountryName*/
+            `projectfit5120`.`global-vaccination-coverage`.`Entity` AS `CountryName`,
+	/*rename Code column to CountryCode*/
+                `projectfit5120`.`global-vaccination-coverage`.`Code` AS `CountryCode`,
+	/*convert column Year to integer*/
+                CAST(`projectfit5120`.`global-vaccination-coverage`.`Year`
+                    AS UNSIGNED) AS `Year`,
+	/*convert column BCG (% of one-year-olds immunized)to integer*/
+                CAST(`projectfit5120`.`global-vaccination-coverage`.`BCG (% of one-year-olds immunized)`
+                    AS DECIMAL (10 , 0 )) AS `VaccineRate`,
+                'BBG' AS `VaccineCode`,
+                'Tuberculosis' AS `VaccineName`
+        FROM
+            `projectfit5120`.`global-vaccination-coverage`
+        WHERE
+            (`projectfit5120`.`global-vaccination-coverage`.`Code` <> '') UNION ALL SELECT 
+            `projectfit5120`.`global-vaccination-coverage`.`Entity` AS `CountryName`,
+                `projectfit5120`.`global-vaccination-coverage`.`Code` AS `CountryCode`,
+                CAST(`projectfit5120`.`global-vaccination-coverage`.`Year`
+                    AS UNSIGNED) AS `Year`,
+                CAST(`projectfit5120`.`global-vaccination-coverage`.`HepB3 (% of one-year-olds immunized)`
+                    AS DECIMAL (10 , 0 )) AS `VaccineRate`,
+                'HepB3' AS `VaccineCode`,
+                'Hepatitis B' AS `VaccineName`
+        FROM
+            `projectfit5120`.`global-vaccination-coverage`
+        WHERE
+            (`projectfit5120`.`global-vaccination-coverage`.`Code` <> '') UNION ALL SELECT 
+            `projectfit5120`.`global-vaccination-coverage`.`Entity` AS `CountryName`,
+                `projectfit5120`.`global-vaccination-coverage`.`Code` AS `CountryCode`,
+                CAST(`projectfit5120`.`global-vaccination-coverage`.`Year`
+                    AS UNSIGNED) AS `Year`,
+                CAST(`projectfit5120`.`global-vaccination-coverage`.`Hib3 (% of one-year-olds immunized)`
+                    AS DECIMAL (10 , 0 )) AS `VaccineRate`,
+                'Hib' AS `VaccineCode`,
+                'Haemophilus influenzae type b' AS `VaccineName`
+        FROM
+            `projectfit5120`.`global-vaccination-coverage`
+        WHERE
+            (`projectfit5120`.`global-vaccination-coverage`.`Code` <> '') UNION ALL SELECT 
+            `projectfit5120`.`global-vaccination-coverage`.`Entity` AS `CountryName`,
+                `projectfit5120`.`global-vaccination-coverage`.`Code` AS `CountryCode`,
+                CAST(`projectfit5120`.`global-vaccination-coverage`.`Year`
+                    AS UNSIGNED) AS `Year`,
+                CAST(`projectfit5120`.`global-vaccination-coverage`.`IPV1 (% of one-year-olds immunized)`
+                    AS DECIMAL (10 , 0 )) AS `VaccineRate`,
+                'IPV1' AS `VaccineCode`,
+                'Poliovirus' AS `VaccineName`
+        FROM
+            `projectfit5120`.`global-vaccination-coverage`
+        WHERE
+            (`projectfit5120`.`global-vaccination-coverage`.`Code` <> '') UNION ALL SELECT 
+            `projectfit5120`.`global-vaccination-coverage`.`Entity` AS `CountryName`,
+                `projectfit5120`.`global-vaccination-coverage`.`Code` AS `CountryCode`,
+                CAST(`projectfit5120`.`global-vaccination-coverage`.`Year`
+                    AS UNSIGNED) AS `Year`,
+                CAST(`projectfit5120`.`global-vaccination-coverage`.`MCV1 (% of one-year-olds immunized)`
+                    AS DECIMAL (10 , 0 )) AS `VaccineRate`,
+                'MMR1' AS `VaccineCode`,
+                'Measles-containing-vaccine first-dose' AS `VaccineName`
+        FROM
+            `projectfit5120`.`global-vaccination-coverage`
+        WHERE
+            (`projectfit5120`.`global-vaccination-coverage`.`Code` <> '') UNION ALL SELECT 
+            `projectfit5120`.`global-vaccination-coverage`.`Entity` AS `CountryName`,
+                `projectfit5120`.`global-vaccination-coverage`.`Code` AS `CountryCode`,
+                CAST(`projectfit5120`.`global-vaccination-coverage`.`Year`
+                    AS UNSIGNED) AS `Year`,
+                CAST(`projectfit5120`.`global-vaccination-coverage`.`PCV3 (% of one-year-olds immunized)`
+                    AS DECIMAL (10 , 0 )) AS `VaccineRate`,
+                'PCV' AS `VaccineCode`,
+                'Pneumococcal Conjugate' AS `VaccineName`
+        FROM
+            `projectfit5120`.`global-vaccination-coverage`
+        WHERE
+            (`projectfit5120`.`global-vaccination-coverage`.`Code` <> '') UNION ALL SELECT 
+            `projectfit5120`.`global-vaccination-coverage`.`Entity` AS `CountryName`,
+                `projectfit5120`.`global-vaccination-coverage`.`Code` AS `CountryCode`,
+                CAST(`projectfit5120`.`global-vaccination-coverage`.`Year`
+                    AS UNSIGNED) AS `Year`,
+                CAST(`projectfit5120`.`global-vaccination-coverage`.`Pol3 (% of one-year-olds immunized)`
+                    AS DECIMAL (10 , 0 )) AS `VaccineRate`,
+                'Pol3' AS `VaccineCode`,
+                'Polio 1 Year Old' AS `VaccineName`
+        FROM
+            `projectfit5120`.`global-vaccination-coverage`
+        WHERE
+            (`projectfit5120`.`global-vaccination-coverage`.`Code` <> '') UNION ALL SELECT 
+            `projectfit5120`.`global-vaccination-coverage`.`Entity` AS `CountryName`,
+                `projectfit5120`.`global-vaccination-coverage`.`Code` AS `CountryCode`,
+                CAST(`projectfit5120`.`global-vaccination-coverage`.`Year`
+                    AS UNSIGNED) AS `Year`,
+                CAST(`projectfit5120`.`global-vaccination-coverage`.`RCV1 (% of one-year-olds immunized)`
+                    AS DECIMAL (10 , 0 )) AS `VaccineRate`,
+                'RCV1' AS `VaccineCode`,
+                'Rubella 1 Year Old' AS `VaccineName`
+        FROM
+            `projectfit5120`.`global-vaccination-coverage`
+        WHERE
+            (`projectfit5120`.`global-vaccination-coverage`.`Code` <> '') UNION ALL SELECT 
+            `projectfit5120`.`global-vaccination-coverage`.`Entity` AS `CountryName`,
+                `projectfit5120`.`global-vaccination-coverage`.`Code` AS `CountryCode`,
+                CAST(`projectfit5120`.`global-vaccination-coverage`.`Year`
+                    AS UNSIGNED) AS `Year`,
+                CAST(`projectfit5120`.`global-vaccination-coverage`.`RotaC (% of one-year-olds immunized)`
+                    AS DECIMAL (10 , 0 )) AS `VaccineRate`,
+                'RotaC' AS `VaccineCode`,
+                'Rotavirus' AS `VaccineName`
+        FROM
+            `projectfit5120`.`global-vaccination-coverage`
+        WHERE
+            (`projectfit5120`.`global-vaccination-coverage`.`Code` <> '') UNION ALL SELECT 
+            `projectfit5120`.`global-vaccination-coverage`.`Entity` AS `CountryName`,
+                `projectfit5120`.`global-vaccination-coverage`.`Code` AS `CountryCode`,
+                CAST(`projectfit5120`.`global-vaccination-coverage`.`Year`
+                    AS UNSIGNED) AS `Year`,
+                CAST(`projectfit5120`.`global-vaccination-coverage`.`YFV (% of one-year-olds immunized)`
+                    AS DECIMAL (10 , 0 )) AS `VaccineRate`,
+                'YFV' AS `VaccineCode`,
+                'Yellow Fever Vaccine' AS `VaccineName`
+        FROM
+            `projectfit5120`.`global-vaccination-coverage`
+        WHERE
+            (`projectfit5120`.`global-vaccination-coverage`.`Code` <> '') UNION ALL SELECT 
+            `projectfit5120`.`global-vaccination-coverage`.`Entity` AS `CountryName`,
+                `projectfit5120`.`global-vaccination-coverage`.`Code` AS `CountryCode`,
+                CAST(`projectfit5120`.`global-vaccination-coverage`.`Year`
+                    AS UNSIGNED) AS `Year`,
+                CAST(`projectfit5120`.`global-vaccination-coverage`.`DTP3 (% of one-year-olds immunized)`
+                    AS DECIMAL (10 , 0 )) AS `VaccineRate`,
+                'DTP3' AS `VaccineCode`,
+                'Diphtheria, tetanus, pertussis' AS `VaccineName`
+        FROM
+            `projectfit5120`.`global-vaccination-coverage`
+        WHERE
+            (`projectfit5120`.`global-vaccination-coverage`.`Code` <> '') UNION ALL SELECT 
+            `projectfit5120`.`global-vaccination-coverage`.`Entity` AS `CountryName`,
+                `projectfit5120`.`global-vaccination-coverage`.`Code` AS `CountryCode`,
+                CAST(`projectfit5120`.`global-vaccination-coverage`.`Year`
+                    AS UNSIGNED) AS `Year`,
+                CAST(`projectfit5120`.`global-vaccination-coverage`.`MCV2 (% of children immunized)`
+                    AS DECIMAL (10 , 0 )) AS `VaccineRate`,
+                'MMR2' AS `VaccineCode`,
+                'Measles-containing-vaccine second-dose' AS `VaccineName`
+        FROM
+            `projectfit5120`.`global-vaccination-coverage`
+        WHERE
+            (`projectfit5120`.`global-vaccination-coverage`.`Code` <> '')) `p`
+    WHERE
+	/*only include Year =2019 and exclude vaccines ('YFV' , 'BBG', 'MMR2') */
+        ((`p`.`Year` = 2019)
+            AND (`p`.`VaccineCode` NOT IN ('YFV' , 'BBG', 'MMR2')))
+---------------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`%` 
+    SQL SECURITY DEFINER
+VIEW `vw_Country` AS
+    SELECT DISTINCT
+	/* select the unique values of the countries*/
+        `global-vaccination-coverage`.`Entity` AS `CountryName`,
+        `global-vaccination-coverage`.`Code` AS `CountryCode`
+    FROM
+        `global-vaccination-coverage`
+    WHERE
+	/*exclude blank codes*/
+        (`global-vaccination-coverage`.`Code` <> '')
+---------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`%` 
+    SQL SECURITY DEFINER
+VIEW `vw_VaccineOver20` AS
+    SELECT 
+        `vaccines-for-refugees-aged-20-years`.`Antigen` AS `Antigen`,
+        `vaccines-for-refugees-aged-20-years`.`Total doses needed` AS `TotalDoses`,
+        `vaccines-for-refugees-aged-20-years`.`Minimal interval between doses` AS `MinInterval`,
+        `vaccines-for-refugees-aged-20-years`.`Notes` AS `Notes`,
+	/*Create new column VaccineName based on the column Antigen*/
+        (CASE
+            WHEN (`vaccines-for-refugees-aged-20-years`.`Antigen` IN ('Pertussis' , 'Diphtheria, tetanus')) THEN 'Pertussis, Diphtheria, tetanus'
+            WHEN (`vaccines-for-refugees-aged-20-years`.`Antigen` = 'Poliomyelitis') THEN 'Poliomyelitis'
+            WHEN (`vaccines-for-refugees-aged-20-years`.`Antigen` = 'mumps, Measles, rubella') THEN 'mumps, Measles, rubella'
+            WHEN (`vaccines-for-refugees-aged-20-years`.`Antigen` = 'Hepatitis B') THEN 'Hepatitis B'
+            WHEN (`vaccines-for-refugees-aged-20-years`.`Antigen` = 'Varicella') THEN 'Varicella'
+        END) AS `VaccineName`,
+	/*Create new column VaccineCode based on the column Antigen*/
+        (CASE
+            WHEN (`vaccines-for-refugees-aged-20-years`.`Antigen` IN ('Pertussis' , 'Diphtheria, tetanus')) THEN 'DTP3'
+            WHEN (`vaccines-for-refugees-aged-20-years`.`Antigen` = 'Poliomyelitis') THEN 'IPV1'
+            WHEN (`vaccines-for-refugees-aged-20-years`.`Antigen` = 'mumps, Measles, rubella') THEN 'MMR'
+            WHEN (`vaccines-for-refugees-aged-20-years`.`Antigen` = 'Hepatitis B ') THEN 'HepB'
+            WHEN (`vaccines-for-refugees-aged-20-years`.`Antigen` = 'Varicella') THEN 'Varicella'
+        END) AS `VaccineCode`
+    FROM
+        `vaccines-for-refugees-aged-20-years`
+------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`%` 
+    SQL SECURITY DEFINER
+VIEW `vw_CombinedVaccineDescEffects` AS
+	/*combine the vaccine lists with the side effects table into one one list*/
+    SELECT DISTINCT
+        `p`.`VaccineName` AS `VaccineName`,
+        `p`.`Disease` AS `Description`,
+        `p`.`SideEffectsOfVaccination` AS `SideEffect`,
+	/*add new column VaccineAgeType flag, 1 for adult and 0 for child/teens*/
+        1 AS `VaccineAgeType`
+    FROM
+        (`vw_Side-effects-disease-Vaccine` `p`
+        JOIN `vw_VaccineOver20` `t` ON ((`p`.`VaccineCode` = `t`.`VaccineCode`))) 
+    UNION ALL SELECT DISTINCT
+        `p`.`VaccineName` AS `VaccineName`,
+        `p`.`Disease` AS `Description`,
+        `p`.`SideEffectsOfVaccination` AS `SideEffect`,
+        0 AS `VaccineAgeType`
+    FROM
+        (`vw_Side-effects-disease-Vaccine` `p`
+        JOIN `vw_Vaccine10To19` `t` ON ((`p`.`VaccineCode` = `t`.`VaccineCode`)))
