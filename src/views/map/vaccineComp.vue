@@ -1,8 +1,10 @@
 <template>
-    <div>
-        <!--<h1>Data Comparsion</h1>-->
-        <h2>The percentage of the people who has taken the selected vaccine between the countries in 2019. Users can choose a country and compare it with Australia, and the data will show which one of these two countries has a higher rate of coverage for this vaccine.
-        </h2>
+    <div class="textcontent" style="width: 90%; height: 30%">
+        <h3 style="border:1px solid #ccc">
+            Over 90% person trust the medical system in Australia, along with the efficacy rate of the vaccine being well over 85%.
+            The percentage of the people who has taken the selected vaccine between the countries in 2019. Users can choose a country and compare it with Australia.
+            As well as the data will show which one of these two countries has a higher rate of coverage for this vaccine.
+        </h3>
     <div style="width: 100vw; height: 100vh; display: flex">
         <div style="width: 50vw">
             <div style="width: 10vw; height: 10vh">
@@ -43,24 +45,52 @@
             </div>
             <div style="width: 50vw; height: 90vh" id="chart2"></div>
         </div>
+
+        <Col span="12" class="col right">
+            <div class="box">
+                <img :src="imgs" alt="">
+                <div class="border"></div>
+            </div>
+        </Col>
     </div>
     </div>
 </template>
 
 <script>
+    import top10 from '@/assets/imgs/top10.jpg'
+    import echarts from 'echarts';
     export default {
         name: "chart",
+        props: {
+            type: {
+                default: 'bar'
+            },
+            id: {
+                default: '0'
+            },
+            datap: {
+                default: ''
+            },
+            title: {
+                default: '图表名称'
+            }
+        },
         data() {
             return {
+                date: "1",
                 dataList: [],
-                options: [
-
-                ],
-                options2: [
-
-                ],
+                options: [],
+                options2: [],
                 value:"",
                 value2: "",
+                blockList:[
+                    {
+                        title:"Top10 Vaccine Trust Rate",
+                        pinner:"Around 83% of the people in Australia accessed news about vaccine, both online and offline; thus news being informative about vaccines.",
+                        imgs:top10,
+                        name:"vaccinelist"
+                    },
+                    ],
             };
         },
         mounted() {
@@ -112,6 +142,7 @@
                     this.value = options[0].value;
                     this.value2 = options[0].value;
                 });
+            // this.getAttendanceData();
         },
 
         methods: {
@@ -245,8 +276,16 @@
                     ],
                 });
             },
-        },
-    };
+    }
+    }
 </script>
+
+
 <style  scoped>
+    .textcontent h3{color: black;
+        align: center;
+        border:1px solid #ccc;
+        margin:30px;
+        font-size: 20px;
+    }
 </style>

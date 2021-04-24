@@ -1,6 +1,10 @@
 <template>
-    <div style="width: 100%; height: 50%">
-        <h3>We provide relevant news based on the vaccines on our website, which are grouped by vaccine type so that users can easily browse the categories in need. These vaccine-related news help users keep abreast of the latest vaccine developments around the world, which helps people better understand vaccines and motivate people to get vaccinated.</h3>
+    <div class="textcontent" style="width: 90%; height: 30%">
+        <h3 style="border:1px solid #ccc">
+            Around 83% of the people in Australia accessed news about vaccine, both online and offline; thus news being informative about vaccines.
+            We provide relevant news based on the vaccines on our website, which are grouped by vaccine type so that users can easily browse the categories in need.
+            These vaccine-related news help users keep abreast of the latest vaccine developments around the world, which helps people better understand vaccines and motivate people to get vaccinated.
+        </h3>
         <div class="list">
             <div class="item" v-for="(item, index) in list" :key="index">
                 <img :src="item.img" alt="" />
@@ -58,8 +62,8 @@
         height: 10vh;
     }
     .list {
-        max-width: 90vw;
-        padding: 20vh 5vw 0 5vw;
+        max-width: 100vw;
+        padding: 10vh 5vw 0 5vw;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
@@ -75,5 +79,11 @@
     .item img{
         width: 25vw;
         height: 30vh;
+    }
+    .textcontent h3{color: black;
+        align: center;
+        border:1px solid #ccc;
+        margin:30px;
+        font-size: 20px;
     }
 </style>

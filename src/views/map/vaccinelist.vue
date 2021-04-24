@@ -41,7 +41,7 @@
       </div>
     </div>
     <!--    不良反映弹框-->
-    <Modal v-model="modal2" title="effcet description" footer-hide>
+    <Modal v-model="modal2" title="Side-effect description" footer-hide>
       <p>{{sideEffect}}</p>
     </Modal>
   </div>
