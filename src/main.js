@@ -1,26 +1,25 @@
 import Vue from 'vue'
 import App from './App.vue'
-import VueRouter from 'vue-router'
-import index from './components/index.vue'
-import Gdpsui from './components/Gdpsui.vue'
+import router from './router'
+import store from './store'
+import iView from 'iview'
+import 'iview/dist/styles/iview.css' // 使用 CSS
+// iview覆盖样式
+import './assets/css/reset.css'
+import globalLoading from '@/components/globalLoading'
 
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
-Vue.use(VueRouter)
+
+Vue.use(iView)
 Vue.use(ElementUI);
+Vue.component('globalLoading', globalLoading)
 
-const routes = [
-    { path: '/', component: index, name: 'index', exact: true },
-    { path: '/Gdpsui', component: Gdpsui, name: 'Gdpsui', exact: true },
-
-]
-const router = new VueRouter({
-    routes
-})
 
 Vue.config.productionTip = false
 
 new Vue({
-    render: h => h(App),
-    router
+    router,
+    store,
+    render: h => h(App)
 }).$mount('#app')
